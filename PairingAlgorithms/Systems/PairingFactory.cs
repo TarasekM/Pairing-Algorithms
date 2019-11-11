@@ -1,10 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using PlatformForChessMatchmaking.Models;
+﻿using System.Collections.Generic;
+using PairingAlgorithms.Models;
 
-namespace PlatformForChessMatchmaking.Algorithms
+namespace PairingAlgorithms.Systems
 {
     public class PairingFactory
     {

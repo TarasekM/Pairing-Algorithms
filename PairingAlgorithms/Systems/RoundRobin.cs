@@ -1,9 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Text;
-using PlatformForChessMatchmaking.Models;
+using PairingAlgorithms.Models;
 
-namespace PlatformForChessMatchmaking.Algorithms
+namespace PairingAlgorithms.Systems
 {
     public class RoundRobin : Pairing
     {
