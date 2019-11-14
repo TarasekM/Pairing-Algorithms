@@ -9,48 +9,41 @@ namespace PairingAlgorithms.Systems
         private List<Player> FirstHalf { get; set; }
         private List<Player> SecondHalf { get; set; }
 
-        public RoundRobin(List<Player> Players) : base(Players)
+        public RoundRobin()
         {
-            SetUpTables();
-            CurrentRound = 0;
+            CurrentRound = 1;
         }
 
-        private void SetUpTables()
+        private void SetUpTables(List<Player> Players)
         {
+            // Add BYE player if there's odd number of players. Keep in mind Bye player always have ID of 0
             int m = (int)(Math.Ceiling((decimal)Players.Count / 2));
             int r = Players.Count - 1;
             FirstHalf = Players.GetRange(0, m);
             SecondHalf = Players.GetRange(m, r - m + 1);
             SecondHalf.Reverse();
-        }
-
-        public void AddPlayer(Player player)
-        {
-            Players.Add(player);
-        }
-
-        public void RemovePlayer(Player player)
-        {
-            Players.Remove(player);
-        }
-
-        public override List<Player> Pair()
-        {
-            if (CurrentRound++ >= Players.Count - 1)
+            if (SecondHalf.Count < FirstHalf.Count)
             {
-                return Players;
+                SecondHalf.Add(new Player(0, "BYE"));
             }
-            PrintMatchings(); //TODO remove it
+        }
+
+        public override List<List<Player>> Pair(List<Player> Players)
+        {
+            // Split tables into 2 if it's round 1
+            if (CurrentRound == 1)
+            {
+                SetUpTables(Players);
+            }
+            // Return if max rounds has been played
+            if (CurrentRound >= Players.Count - 1)
+            {
+                return GetPairings();
+            }
+            List<List<Player>> Pairings = GetPairings();
             Rotate();
-            return Players;
-        }
-
-        public void PrintMatchings()
-        {
-            for (int i = 0; i < FirstHalf.Count; i++)
-            {
-                Console.WriteLine(FirstHalf[i] + " vs " + SecondHalf[i]);
-            }
+            CurrentRound++;
+            return Pairings;
         }
 
         public void Rotate()
@@ -58,14 +51,32 @@ namespace PairingAlgorithms.Systems
             Player lastFromFirstHalf = FirstHalf[FirstHalf.Count - 1];
             Player firstFromSecondHalf = SecondHalf[0];
 
-            for(int i = 1; i < FirstHalf.Count - 1; i++)
+            for(int i = FirstHalf.Count - 1; i > 1; i--)
             {
-                FirstHalf[i + 1] = FirstHalf[i];
+                FirstHalf[i] = FirstHalf[i - 1];
             }
             FirstHalf[1] = firstFromSecondHalf;
             SecondHalf.Remove(firstFromSecondHalf);
             SecondHalf.Add(lastFromFirstHalf);
 
+        }
+
+        public List<List<Player>> GetPairings()
+        {
+            List<List<Player>> Pairings = new List<List<Player>>();
+            for (int i = 0; i < FirstHalf.Count; i++)
+            {
+                List<Player> Pair = new List<Player>();
+                Pair.Add(FirstHalf[i]);
+                Pair.Add(SecondHalf[i]);
+                Pairings.Add(Pair);
+            }
+
+            if (CurrentRound % 2 == 0)
+            {
+                Pairings[0].Reverse();
+            }
+            return Pairings;
         }
     }
 }

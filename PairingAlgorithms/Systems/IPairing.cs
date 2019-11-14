@@ -5,6 +5,6 @@ namespace PairingAlgorithms.Systems
 {
     public interface IPairing
     {
-        List<Player> Pair();
+        List<List<Player>> Pair(List<Player> Players);
     }
 }

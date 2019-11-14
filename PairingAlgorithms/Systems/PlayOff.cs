@@ -6,11 +6,11 @@ namespace PairingAlgorithms.Systems
 {
     public class PlayOff : Pairing
     {
-        public PlayOff(List<Player> Players) : base(Players)
+        public PlayOff() 
         {
         }
 
-        public override List<Player> Pair()
+        public override List<List<Player>> Pair(List<Player> Players)
         {
             throw new NotImplementedException();
         }

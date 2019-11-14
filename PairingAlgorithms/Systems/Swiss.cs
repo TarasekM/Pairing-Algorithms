@@ -6,11 +6,11 @@ namespace PairingAlgorithms.Systems
 {
     public class Swiss : Pairing
     {
-        public Swiss(List<Player> Players) : base(Players)
+        public Swiss()
         {
         }
 
-        public override List<Player> Pair()
+        public override List<List<Player>> Pair(List<Player> Players)
         {
             throw new NotImplementedException();
         }

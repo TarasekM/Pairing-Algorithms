@@ -13,18 +13,18 @@ namespace PairingAlgorithms.Systems
             Swiss,
         }
 
-        public static Pairing GetPairing(PairingSystems System, List<Player> Players)
+        public static Pairing GetPairing(PairingSystems System)
         {
             switch (System)
             {
                 case PairingSystems.RoundRobin:
-                    return new RoundRobin(Players);
+                    return new RoundRobin();
                 case PairingSystems.PlayOff:
                     return new PlayOff();
                 case PairingSystems.Swiss:
                     return new Swiss();
                 default:
-                    return new RoundRobin(Players);
+                    return new RoundRobin();
             }
         }
     }
