@@ -12,7 +12,6 @@ namespace PairingAlgorithms.Models
 
         public Tournament(PairingFactory.PairingSystems PairingSystem)
         {
-            this.Players = Players;
             this.PairingSystem = PairingFactory.GetPairing(PairingSystem);
             this.Name = "Name not given";
             this.Date = "Date not given";
