@@ -1,4 +1,6 @@
 ﻿
+using System;
+
 namespace PairingAlgorithms.Models { 
     public class Player
     {
@@ -24,9 +26,31 @@ namespace PairingAlgorithms.Models {
             HaveOponent = false;
         }
 
-        override public string ToString()
+        public override string ToString()
         {
-            return ID + ". " + Name; 
+            return ID + ". " + Name;
+        }
+
+        public override bool Equals(object obj)
+        {
+            Player other = (Player)obj;
+            if(
+                this.ID == other.ID &&
+                this.Name == other.Name &&
+                this.Score == other.Score &&
+                this.TotalGames == other.TotalGames &&
+                this.GamesAsWhite == other.GamesAsWhite &&
+                this.GamesAsBlack == other.GamesAsBlack &&
+                this.HaveOponent == other.HaveOponent
+                ){
+                return true;
+            }
+            return false;
+        }
+
+        public override int GetHashCode()
+        {
+            return HashCode.Combine(ID, Name, Score, TotalGames, GamesAsWhite, GamesAsBlack, HaveOponent, CurrentOpponentID);
         }
     }
 }
