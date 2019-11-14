@@ -3,7 +3,7 @@ using PairingAlgorithms.Systems;
 
 namespace PairingAlgorithms.Models
 {
-    public class Tournament
+    public class Tournament //TODO Make it abstract || Add methods like printScoreboard / remove Players etc.
     {
         public string Name { get; set; }
         public string Date { get; set; }
@@ -12,12 +12,15 @@ namespace PairingAlgorithms.Models
 
         public Tournament(PairingFactory.PairingSystems PairingSystem)
         {
-            this.PairingSystem = PairingFactory.GetPairing(PairingSystem, Players);
+            this.Players = Players;
+            this.PairingSystem = PairingFactory.GetPairing(PairingSystem);
+            this.Name = "Name not given";
+            this.Date = "Date not given";
         }
 
         public void Pair()
         {
-            PairingSystem.Pair();
+            PairingSystem.Pair(Players);
         }
     }
 }
