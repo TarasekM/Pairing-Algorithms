@@ -58,7 +58,6 @@ namespace PairingAlgorithms.Systems
             FirstHalf[1] = firstFromSecondHalf;
             SecondHalf.Remove(firstFromSecondHalf);
             SecondHalf.Add(lastFromFirstHalf);
-
         }
 
         public List<List<Player>> GetPairings()
@@ -67,14 +66,18 @@ namespace PairingAlgorithms.Systems
             for (int i = 0; i < FirstHalf.Count; i++)
             {
                 List<Player> Pair = new List<Player>();
-                Pair.Add(FirstHalf[i]);
-                Pair.Add(SecondHalf[i]);
+                Player white = FirstHalf[i];
+                Player black = SecondHalf[i];
+                Pair.Add(white);
+                Pair.Add(black);
                 Pairings.Add(Pair);
+                white.Pair(black);
             }
 
             if (CurrentRound % 2 == 0)
             {
                 Pairings[0].Reverse();
+                Pairings[0][0].Pair(Pairings[0][1]);
             }
             return Pairings;
         }
