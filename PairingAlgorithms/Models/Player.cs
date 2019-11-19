@@ -29,11 +29,21 @@ namespace PairingAlgorithms.Models {
             OponentsIDs = new List<int>();
         }
 
-        public void Pair(Player other)
+        public static Player GetByePlayer()
+        {
+            return new Player(0, "Bye");
+        }
+
+        public bool Pair(Player other)
         {
             /// <summary>method <c>Pair</c> Pairs player with other one. Updates Players fields.
             /// Note: this player always "plays" white and other player always "plays" black.
             /// </summary>
+
+            if (OponentsIDs.Contains(other.ID))
+            {
+                return false;
+            }
             HaveOponent = true;
             CurrentOpponentID = other.ID;
             OponentsIDs.Add(other.ID);
@@ -45,6 +55,7 @@ namespace PairingAlgorithms.Models {
             other.OponentsIDs.Add(ID);
             other.TotalGames++;
             other.GamesAsBlack++;
+            return true;
         }
 
         public override string ToString()
