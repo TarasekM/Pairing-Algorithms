@@ -9,6 +9,7 @@ namespace PairingAlgorithms.Models
         public string Date { get; set; }
         public Pairing PairingSystem { get; set; }
         public List<Player> Players { get; set; }
+        public int CurrentRound { get; set; }
 
         public Tournament(string Name, string Date, PairingFactory.PairingSystems PairingSystem)
         {
@@ -19,7 +20,23 @@ namespace PairingAlgorithms.Models
 
         public void Pair()
         {
-            List<List<Player>> Pairings = PairingSystem.Pair(Players);
+            List<List<int>> Pairings = PairingSystem.Pair(Players);
+            foreach (List<int> Pair in Pairings)
+            {
+                int white = Pair[0];
+                int black = Pair[1];
+
+                Players.Find(p => p.ID == white)
+                    .Pair(Players.Find(p => p.ID == black));
+            }
+        }
+
+        public void StartTournament()
+        {
+            if (Players.Count % 2 == 1)
+            {
+                Players.Add(Player.GetByePlayer());
+            }
         }
 
         public abstract void GetScoreboard();
