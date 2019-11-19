@@ -7,7 +7,6 @@ namespace Tests
     public class RoundRobinTests
     {
         private RoundRobin RoundRobin = new RoundRobin();
-        private Player ByePlayer = new Player(0, "BYE");
         private List<Player> Players { get; set; }
 
         [SetUp]
@@ -20,14 +19,15 @@ namespace Tests
         public void Full_Tournament_Odd_Players_Pair_Test()
         {
             Players = SetUpPlayers(7);
+            Players.Add(Player.GetByePlayer());
             int[][] pairingsForWholeGame = new int[7][] {
-                new int[] { 1, 7, 2, 6, 3, 5, 4, 0 },
-                new int[] { 6, 1, 7, 5, 2, 0, 3, 4 },
-                new int[] { 1, 5, 6, 0, 7, 4, 2, 3 },
-                new int[] { 0, 1, 5, 4, 6, 3, 7, 2 },
-                new int[] { 1, 4, 0, 3, 5, 2, 6, 7 },
-                new int[] { 3, 1, 4, 2, 0, 7, 5, 6 },
-                new int[] { 3, 1, 4, 2, 0, 7, 5, 6 }
+                new int[] { 6, 1, 7, 5, 2, 0, 4, 3 },
+                new int[] { 1, 7, 0, 6, 5, 4, 3, 2 },
+                new int[] { 0, 1, 4, 7, 6, 3, 2, 5 },
+                new int[] { 1, 4, 3, 0, 7, 2, 5, 6 },
+                new int[] { 3, 1, 2, 4, 0, 5, 6, 7 },
+                new int[] { 1, 2, 5, 3, 4, 6, 7, 0 },
+                new int[] { 1, 2, 5, 3, 4, 6, 7, 0 }
             };
 
             for (int i = 0; i < pairingsForWholeGame.Length; i++)
@@ -41,14 +41,14 @@ namespace Tests
         {
             Players = SetUpPlayers(8);
             int[][] pairingsForWholeGame = new int[8][] {
-                new int[] { 1, 8, 2, 7, 3, 6, 4, 5 },
-                new int[] { 7, 1, 8, 6, 2, 5, 3, 4 },
-                new int[] { 1, 6, 7, 5, 8, 4, 2, 3 },
-                new int[] { 5, 1, 6, 4, 7, 3, 8, 2 },
-                new int[] { 1, 4, 5, 3, 6, 2, 7, 8 },
-                new int[] { 3, 1, 4, 2, 5, 8, 6, 7 },
-                new int[] { 1, 2, 3, 8, 4, 7, 5, 6 },
-                new int[] { 1, 2, 3, 8, 4, 7, 5, 6 }
+                new int[] { 1, 5, 6, 2, 3, 7, 8, 4 },
+                new int[] { 6, 1, 7, 5, 2, 8, 4, 3 },
+                new int[] { 1, 7, 8, 6, 5, 4, 3, 2 },
+                new int[] { 8, 1, 4, 7, 6, 3, 2, 5 },
+                new int[] { 1, 4, 3, 8, 7, 2, 5, 6 },
+                new int[] { 3, 1, 2, 4, 8, 5, 6, 7 },
+                new int[] { 1, 2, 5, 3, 4, 6, 7, 8 },
+                new int[] { 1, 2, 5, 3, 4, 6, 7, 8 }
             };
 
             for (int i = 0; i < pairingsForWholeGame.Length; i++)
@@ -57,10 +57,11 @@ namespace Tests
             }
         }
 
-        private void Pair_Players_Test(int [] listOfIDs)
+
+        private void Pair_Players_Test(int[] listOfIDs)
         {
-            List<List<Player>> ExpectedPairings = SetUp_Pairings(listOfIDs);
-            List<List<Player>> ActualPairings = RoundRobin.Pair(Players);
+            List<List<int>> ExpectedPairings = SetUp_Pairings(listOfIDs);
+            List<List<int>> ActualPairings = RoundRobin.Pair(Players);
             Assert.AreEqual(ExpectedPairings, ActualPairings);
         }
 
@@ -76,43 +77,23 @@ namespace Tests
             return Players;
         }
 
-        private List<List<Player>> SetUp_Pairings(int [] listOfPlayerIDs)
+        private List<List<int>> SetUp_Pairings(int[] listOfPlayerIDs)
         {
 
-            List<List<Player>> ExpectedPairings = new List<List<Player>>();
-            for(int i = 0; i < listOfPlayerIDs.Length; i+=2)
+            List<List<int>> ExpectedPairings = new List<List<int>>();
+            for (int i = 0; i < listOfPlayerIDs.Length; i += 2)
             {
-                Player First;
-                Player Second;
                 int firstID = listOfPlayerIDs[i];
                 int secondID = listOfPlayerIDs[i + 1];
 
-                if (firstID == 0)
+                List<int> Pair = new List<int>
                 {
-                    First = ByePlayer;
-                }
-                else
-                {
-                    First = Players[firstID - 1];
-                }
-
-                if (secondID == 0)
-                {
-                    Second = ByePlayer;
-                }
-                else
-                {
-                    Second = Players[secondID - 1];
-                }
-
-                List<Player> Pair = new List<Player>
-                {
-                    First,
-                    Second
+                    firstID,
+                    secondID
                 };
                 ExpectedPairings.Add(Pair);
             }
-            
+
             return ExpectedPairings;
         }
     }
