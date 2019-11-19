@@ -7,6 +7,6 @@ namespace PairingAlgorithms.Systems
     {
         public int CurrentRound { get; set; }
 
-        public abstract List<List<Player>> Pair(List<Player> Players);
+        public abstract List<List<int>> Pair(List<Player> Players);
     }
 }

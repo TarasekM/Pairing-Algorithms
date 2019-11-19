@@ -10,7 +10,7 @@ namespace PairingAlgorithms.Systems
         {
         }
 
-        public override List<List<Player>> Pair(List<Player> Players)
+        public override List<List<int>> Pair(List<Player> Players)
         {
             throw new NotImplementedException();
         }
