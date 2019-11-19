@@ -1,7 +1,4 @@
-﻿using System.Collections.Generic;
-using PairingAlgorithms.Models;
-
-namespace PairingAlgorithms.Systems
+﻿namespace PairingAlgorithms.Systems
 {
     public class PairingFactory
     {
