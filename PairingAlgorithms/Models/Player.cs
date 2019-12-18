@@ -6,13 +6,16 @@ namespace PairingAlgorithms.Models {
     {
         public int ID { get; set; }
         public string Name { get; set; }
+
         public float Score { get; set; }
+        public float FullBuchholz { get; set; }
+        public float MedianBuchholz { get; set; }
 
         public int TotalGames { get; set; }
         public int GamesAsWhite { get; set; }
         public int GamesAsBlack { get; set; }
 
-        public bool HaveOponent { get; set; }
+        public bool HaveOpponent { get; set; }
         public int? CurrentOpponentID { get; set; }
         public List<int> OponentsIDs { get; set; }
 
@@ -24,7 +27,7 @@ namespace PairingAlgorithms.Models {
             TotalGames = 0;
             GamesAsWhite = 0;
             GamesAsBlack = 0;
-            HaveOponent = false;
+            HaveOpponent = false;
             CurrentOpponentID = null;
             OponentsIDs = new List<int>();
         }
@@ -44,13 +47,13 @@ namespace PairingAlgorithms.Models {
             {
                 return false;
             }
-            HaveOponent = true;
+            HaveOpponent = true;
             CurrentOpponentID = other.ID;
             OponentsIDs.Add(other.ID);
             TotalGames++;
             GamesAsWhite++;
 
-            other.HaveOponent = true;
+            other.HaveOpponent = true;
             other.CurrentOpponentID = ID;
             other.OponentsIDs.Add(ID);
             other.TotalGames++;
@@ -73,7 +76,7 @@ namespace PairingAlgorithms.Models {
                 this.TotalGames == other.TotalGames &&
                 this.GamesAsWhite == other.GamesAsWhite &&
                 this.GamesAsBlack == other.GamesAsBlack &&
-                this.HaveOponent == other.HaveOponent
+                this.HaveOpponent == other.HaveOpponent
                 ){
                 return true;
             }
@@ -82,7 +85,7 @@ namespace PairingAlgorithms.Models {
 
         public override int GetHashCode()
         {
-            return HashCode.Combine(ID, Name, Score, TotalGames, GamesAsWhite, GamesAsBlack, HaveOponent, CurrentOpponentID);
+            return HashCode.Combine(ID, Name, Score, TotalGames, GamesAsWhite, GamesAsBlack, HaveOpponent, CurrentOpponentID);
         }
     }
 }
