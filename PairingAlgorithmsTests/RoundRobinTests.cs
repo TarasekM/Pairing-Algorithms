@@ -1,4 +1,4 @@
-using NUnit.Framework;
+using Xunit;
 using System.Collections.Generic;
 using PairingAlgorithms.Models;
 using PairingAlgorithms.Systems;
@@ -9,13 +9,7 @@ namespace Tests
         private RoundRobin RoundRobin = new RoundRobin();
         private List<Player> Players { get; set; }
 
-        [SetUp]
-        public void Setup()
-        {
-            RoundRobin = new RoundRobin();
-        }
-
-        [Test]
+        [Fact]
         public void Full_Tournament_Odd_Players_Pair_Test()
         {
             Players = SetUpPlayers(7);
@@ -36,7 +30,7 @@ namespace Tests
             }
         }
 
-        [Test]
+        [Fact]
         public void Full_Tournament_Even_Players_Pair_Test()
         {
             Players = SetUpPlayers(8);
@@ -62,7 +56,7 @@ namespace Tests
         {
             List<List<int>> ExpectedPairings = SetUp_Pairings(listOfIDs);
             List<List<int>> ActualPairings = RoundRobin.Pair(Players);
-            Assert.AreEqual(ExpectedPairings, ActualPairings);
+            Assert.Equal(ExpectedPairings, ActualPairings);
         }
 
         private List<Player> SetUpPlayers(int n)
