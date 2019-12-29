@@ -4,7 +4,7 @@ using PairingAlgorithms.Models;
 using PairingAlgorithms.Systems;
 namespace Tests
 {
-    public class RoundRobinTests
+    public class RoundRobinTests : PairingTest
     {
         private RoundRobin RoundRobin = new RoundRobin();
         private List<Player> Players { get; set; }
@@ -57,38 +57,6 @@ namespace Tests
             List<List<int>> ExpectedPairings = SetUp_Pairings(listOfIDs);
             List<List<int>> ActualPairings = RoundRobin.Pair(Players);
             Assert.Equal(ExpectedPairings, ActualPairings);
-        }
-
-        private List<Player> SetUpPlayers(int n)
-        {
-            List<Player> Players = new List<Player>();
-
-            for (int i = 1; i <= n; i++)
-            {
-                Players.Add(new Player(i, "Zawodnik nr " + i));
-            }
-
-            return Players;
-        }
-
-        private List<List<int>> SetUp_Pairings(int[] listOfPlayerIDs)
-        {
-
-            List<List<int>> ExpectedPairings = new List<List<int>>();
-            for (int i = 0; i < listOfPlayerIDs.Length; i += 2)
-            {
-                int firstID = listOfPlayerIDs[i];
-                int secondID = listOfPlayerIDs[i + 1];
-
-                List<int> Pair = new List<int>
-                {
-                    firstID,
-                    secondID
-                };
-                ExpectedPairings.Add(Pair);
-            }
-
-            return ExpectedPairings;
         }
     }
 }
