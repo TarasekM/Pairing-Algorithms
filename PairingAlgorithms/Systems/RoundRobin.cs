@@ -21,10 +21,11 @@ namespace PairingAlgorithms.Systems
             // Split tables into 2 if it's round 1
             if (CurrentRound == 1)
             {
+                MaxRound = Players.Count - 1;
                 SetUpTables(Players);
             }
             // Return if max rounds has been played
-            if (CurrentRound >= Players.Count - 1)
+            if (CurrentRound >= MaxRound)
             {
                 return GetPairings(Players);
             }
