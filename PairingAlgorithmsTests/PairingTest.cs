@@ -6,7 +6,7 @@ namespace Tests{
 
     public class PairingTest
     {
-    protected List<Player> SetUpPlayers(int n)
+        protected List<Player> SetUpPlayers(int n)
         {
             List<Player> Players = new List<Player>();
 
@@ -16,7 +16,7 @@ namespace Tests{
             }
 
             return Players;
-         }
+        }
          
         protected List<List<int>> SetUp_Pairings(int[] listOfPlayerIDs)
         {
