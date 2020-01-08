@@ -18,8 +18,24 @@ namespace PairingAlgorithms.Systems
         {
             if (CurrentRound == 1){
                 CurrentPairs = GetFirstPairs(Players);
+            }else{
+                CurrentPairs = GetParis(Players);
             }
+            CurrentRound++;
             return CurrentPairs;
+        }
+        
+        private List<List<int>> GetParis(List<Player> Players){
+            List<int> IDs = GetIDs(Players);
+            IDs = RemoveLosers(IDs);
+            List<List<int>> Pairs = new List<List<int>>();
+            for(int i = 0; i < IDs.Count; i+=2){
+                int p1 = IDs[i];
+                int p2 = IDs[i+1];
+                Pairs.Add(
+                    new List<int>(){ p1, p2 });
+            }
+            return Pairs;
         }
 
         private  List<List<int>> GetFirstPairs(List<Player> Players){
@@ -33,8 +49,7 @@ namespace PairingAlgorithms.Systems
                 int p1 = IDs[i];
                 int p2 = IDs[mid + i];
                 FirstPairs.Add(
-                    new List<int>(){ p1, p2 }
-                    );
+                    new List<int>(){ p1, p2 });
             }
 
             return FirstPairs;
@@ -68,6 +83,17 @@ namespace PairingAlgorithms.Systems
             }
             return IDs;
         }
-    
+        
+        private List<int> RemoveLosers(List<int> IDs){
+            List<int> withoutLosers = new List<int>();
+            foreach(List<int> Pair in CurrentPairs){
+                for(int i = 0; i < Pair.Count; i++){
+                    if (IDs.Contains(Pair[i])){
+                        withoutLosers.Add(Pair[i]);
+                    }
+                }
+            }
+            return withoutLosers;
+        }
     }
 }
