@@ -19,6 +19,11 @@ namespace PairingAlgorithms.Models {
         public int? CurrentOpponentID { get; set; }
         public List<int> OponentsIDs { get; set; }
 
+        enum Colors{
+            BLACK,
+            WHITE
+        }
+
         public Player(int ID, string Name)
         {
             this.ID = ID;
@@ -30,6 +35,7 @@ namespace PairingAlgorithms.Models {
             HaveOpponent = false;
             CurrentOpponentID = null;
             OponentsIDs = new List<int>();
+            OponentsIDs.Add(this.ID);
         }
 
         public static Player GetByePlayer()
@@ -59,6 +65,63 @@ namespace PairingAlgorithms.Models {
             other.TotalGames++;
             other.GamesAsBlack++;
             return true;
+        }
+
+        public bool CanPlay(Player other){
+            if (this.PlayedWith(other) || this.HaveOpponent || other.HaveOpponent){
+                return false;
+            }
+            
+            if(other.CanPlayAs(Player.Opossite(this.PrefferedColor()))){
+                return true;
+            }
+            if(this.CanPlayAs(Player.Opossite(other.PrefferedColor()))){
+                return true;
+            }
+            return false;
+        }
+
+        private Colors PrefferedColor(){
+            int whiteColorDifference = this.GamesAsWhite - this.GamesAsBlack;
+            int blackColorDifference = this.GamesAsBlack - this.GamesAsWhite;
+            Colors prefferedColor;
+            if(whiteColorDifference > blackColorDifference){
+                prefferedColor = Colors.BLACK; 
+            }else{
+                prefferedColor = Colors.WHITE;
+            }
+            return prefferedColor;
+        }
+
+        private bool CanPlayAs(Colors color){
+            switch(color){
+                case Colors.WHITE:
+                    int whiteColorDifference = this.GamesAsWhite - this.GamesAsBlack;
+                    return whiteColorDifference < 2;
+                case Colors.BLACK:
+                    int blackColorDifference = this.GamesAsBlack - this.GamesAsWhite;
+                    return blackColorDifference < 2;
+                default:
+                    return false;
+            }
+        }
+
+        static Colors Opossite(Colors color){
+            switch(color){
+                case Colors.BLACK:
+                    return Colors.WHITE;
+                case Colors.WHITE:
+                    return Colors.BLACK;
+                default:
+                    return Colors.BLACK;
+            }
+        }
+
+        private bool PlayedWith(Player other){
+            if (OponentsIDs.Contains(other.ID)){
+                return true;
+            }
+            return false;
         }
 
         public override string ToString()
