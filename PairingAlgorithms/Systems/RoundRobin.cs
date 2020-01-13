@@ -37,7 +37,6 @@ namespace PairingAlgorithms.Systems
 
         private void SetUpTables(List<Player> Players)
         {
-            // Add BYE player if there's odd number of players. Keep in mind Bye player always have ID of 0
             int m = (int)(Math.Ceiling((decimal)Players.Count / 2));
             int r = Players.Count;
             int index = 0;
